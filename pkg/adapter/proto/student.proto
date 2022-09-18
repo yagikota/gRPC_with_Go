@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "./";
+
+service StudentHandler {
+    rpc StudentByID(StudentByIDRequest) returns (Student){}
+    rpc Students(AllStudentsRequest) returns (Stundents){}
+}
+
+message StudentByIDRequest {
+    int64 id = 1;
+}
+
+message Student {
+    int64 id = 1;
+    string name = 2;
+    int32 age = 3;
+    int32 class = 4;
+}
+
+message AllStudentsRequest {
+}
+
+message Stundents {
+    repeated Student students = 1;
+}

@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "./";
+
+service HealthCheckHandler {
+    rpc HealthCheck(HealthcheckRequest) returns (HealthcheckResponse){}
+}
+
+message HealthcheckRequest {
+}
+
+message HealthcheckResponse {
+    string message = 1;
+}
