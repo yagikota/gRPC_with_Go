@@ -1,4 +1,4 @@
-module github.com/yagikota/clean_architecture_wtih_go
+module github.com/yagikota/gRPC_with_go
 
 go 1.19
 

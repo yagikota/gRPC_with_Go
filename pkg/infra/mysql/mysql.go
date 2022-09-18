@@ -6,8 +6,8 @@ import (
 	"fmt"
 
 	"github.com/volatiletech/sqlboiler/v4/queries/qm"
-	"github.com/yagikota/clean_architecture_wtih_go/pkg/domain/model"
-	"github.com/yagikota/clean_architecture_wtih_go/pkg/domain/repository"
+	"github.com/yagikota/gRPC_with_go/pkg/domain/model"
+	"github.com/yagikota/gRPC_with_go/pkg/domain/repository"
 )
 
 type studentRepository struct {

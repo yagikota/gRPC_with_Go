@@ -5,10 +5,10 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/yagikota/clean_architecture_wtih_go/pkg/domain/service"
-	"github.com/yagikota/clean_architecture_wtih_go/pkg/infra"
-	"github.com/yagikota/clean_architecture_wtih_go/pkg/infra/mysql"
-	"github.com/yagikota/clean_architecture_wtih_go/pkg/usecase"
+	"github.com/yagikota/gRPC_with_go/pkg/domain/service"
+	"github.com/yagikota/gRPC_with_go/pkg/infra"
+	"github.com/yagikota/gRPC_with_go/pkg/infra/mysql"
+	"github.com/yagikota/gRPC_with_go/pkg/usecase"
 )
 
 const (

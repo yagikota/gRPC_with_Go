@@ -3,8 +3,8 @@ package usecase
 import (
 	"context"
 
-	"github.com/yagikota/clean_architecture_wtih_go/pkg/usecase/model"
-	"github.com/yagikota/clean_architecture_wtih_go/pkg/domain/service"
+	"github.com/yagikota/gRPC_with_go/pkg/domain/service"
+	"github.com/yagikota/gRPC_with_go/pkg/usecase/model"
 )
 
 type IStudentUsecase interface {

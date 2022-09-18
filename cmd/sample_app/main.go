@@ -9,8 +9,8 @@ import (
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
-	adaptorHTTP "github.com/yagikota/clean_architecture_wtih_go/pkg/adapter/http"
-	"github.com/yagikota/clean_architecture_wtih_go/pkg/config"
+	adaptorHTTP "github.com/yagikota/gRPC_with_go/pkg/adapter/http"
+	"github.com/yagikota/gRPC_with_go/pkg/config"
 )
 
 func main() {

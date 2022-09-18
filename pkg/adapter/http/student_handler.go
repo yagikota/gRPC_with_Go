@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	"github.com/labstack/echo/v4"
-	"github.com/yagikota/clean_architecture_wtih_go/pkg/usecase"
+	"github.com/yagikota/gRPC_with_go/pkg/usecase"
 )
 
 type studentHandler struct {

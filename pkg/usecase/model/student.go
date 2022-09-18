@@ -3,7 +3,7 @@ package model
 import (
 	"time"
 
-	"github.com/yagikota/clean_architecture_wtih_go/pkg/domain/model"
+	"github.com/yagikota/gRPC_with_go/pkg/domain/model"
 )
 
 type StudentID int
