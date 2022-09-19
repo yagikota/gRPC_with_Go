@@ -1,45 +1,54 @@
 package http
 
 import (
-	"net/http"
-	"strconv"
+	"context"
 
-	"github.com/labstack/echo/v4"
+	"github.com/yagikota/gRPC_with_go/pkg/adapter/proto"
 	"github.com/yagikota/gRPC_with_go/pkg/usecase"
+	"google.golang.org/grpc"
 )
 
-type studentHandler struct {
+type studentServer struct {
 	usecase usecase.IStudentUsecase
+	// https://github.com/grpc/grpc-go/issues/3794#issuecomment-781863019
+	proto.UnimplementedStudentServiceServer
 }
 
-func NewStudentHandler(su usecase.IStudentUsecase) *studentHandler {
-	return &studentHandler{
+func NewStudentServer(gs *grpc.Server, su usecase.IStudentUsecase) *studentServer {
+	ss := &studentServer{
 		usecase: su,
 	}
+	return ss
 }
 
-func (sh *studentHandler) FindAllStudents() echo.HandlerFunc {
-	return func(c echo.Context) error {
-		ctx := c.Request().Context()
-		student, err := sh.usecase.FindAllStudents(ctx)
-		if err != nil {
-			return c.JSON(http.StatusInternalServerError, err.Error())
-		}
-		return c.JSON(http.StatusOK, student)
+func (sh *studentServer) FindAllStudents(ctx context.Context, req *proto.AllStudentsRequest) (*proto.StudentsResponse, error) {
+	sSlice, err := sh.usecase.FindAllStudents(ctx)
+	if err != nil {
+		return nil, err
 	}
+	students := make([]*proto.StudentResponse, len(sSlice))
+	for i, s := range sSlice {
+		students[i] = &proto.StudentResponse{
+			Id:    int64(s.ID),
+			Name:  s.Name,
+			Age:   int32(s.Age),
+			Class: int32(s.Class),
+		}
+	}
+	return &proto.StudentsResponse{
+		Students: students,
+	}, nil
 }
 
-func (sh *studentHandler) FindStudentByID() echo.HandlerFunc {
-	return func(c echo.Context) error {
-		ctx := c.Request().Context()
-		studentID, err := strconv.Atoi(c.Param("student_id"))
-		if err != nil {
-			return c.JSON(http.StatusBadRequest, err.Error())
-		}
-		student, err := sh.usecase.FindStudentByID(ctx, studentID)
-		if err != nil {
-			return c.JSON(http.StatusInternalServerError, err.Error())
-		}
-		return c.JSON(http.StatusOK, student)
+func (sh *studentServer) FindStudentByID(ctx context.Context, req *proto.StudentByIDRequest) (*proto.StudentResponse, error) {
+	student, err := sh.usecase.FindStudentByID(ctx, int(req.Id))
+	if err != nil {
+		return nil, err
 	}
+	return &proto.StudentResponse{
+		Id:    int64(student.ID),
+		Name:  student.Name,
+		Age:   int32(student.Age),
+		Class: int32(student.Class),
+	}, nil
 }

@@ -2,18 +2,18 @@ syntax = "proto3";
 
 package proto;
 
-option go_package = "./";
+option go_package = "../proto";
 
-service StudentHandler {
-    rpc StudentByID(StudentByIDRequest) returns (Student){}
-    rpc Students(AllStudentsRequest) returns (Stundents){}
+service StudentService {
+    rpc FindStudentByID(StudentByIDRequest) returns (StudentResponse){}
+    rpc FindAllStudents(AllStudentsRequest) returns (StudentsResponse){}
 }
 
 message StudentByIDRequest {
     int64 id = 1;
 }
 
-message Student {
+message StudentResponse {
     int64 id = 1;
     string name = 2;
     int32 age = 3;
@@ -23,6 +23,6 @@ message Student {
 message AllStudentsRequest {
 }
 
-message Stundents {
-    repeated Student students = 1;
+message StudentsResponse {
+    repeated StudentResponse students = 1;
 }

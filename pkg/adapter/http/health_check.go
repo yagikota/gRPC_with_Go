@@ -1,29 +1,43 @@
 package http
 
 import (
+	"context"
+	"errors"
 	"fmt"
-	"net/http"
 
-	"github.com/labstack/echo/v4"
+	"github.com/yagikota/gRPC_with_go/pkg/adapter/proto"
+	"google.golang.org/grpc"
 )
 
-type healthCheckResponse struct {
-	Message string `json:"message"`
+// import (
+// 	"fmt"
+// 	"net/http"
+
+// 	"github.com/labstack/echo/v4"
+// )
+
+type healthCheckSever struct {
+	proto.UnimplementedHealthCheckServiceServer
 }
 
-// for health check
-//
-//	{
-//	    "message": "Hello, C Team. you've requested: /health_check"
-//	}
-//
-// will return
-func healthCheck(c echo.Context) error {
-	message := fmt.Sprintf("Hello! you've requested: %s", c.Path())
-	return c.JSON(
-		http.StatusOK,
-		healthCheckResponse{
-			Message: message,
-		},
-	)
+func NewHealthCheckSerer() *healthCheckSever {
+	return &healthCheckSever{}
+}
+
+// // for health check
+// //
+// //	{
+// //	    "message": "Hello, C Team. you've requested: /health_check"
+// //	}
+// //
+// // will return
+func (hs *healthCheckSever) HealthCheck(ctx context.Context, req *proto.HealthcheckRequest) (*proto.HealthcheckResponse, error) {
+	method, ok := grpc.Method(ctx)
+	if !ok {
+		return nil, errors.New("no method string for the server context")
+	}
+	fmt.Println(method)
+	return &proto.HealthcheckResponse{
+		Message: fmt.Sprintf("Hello! You've requested: %s", method),
+	}, nil
 }

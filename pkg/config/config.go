@@ -21,7 +21,7 @@ type MysqlInfo struct {
 }
 
 func LoadConfig() *appConfig {
-	addr := ":" + os.Getenv("PORT")
+	addr := ":" + os.Getenv("PORT") // TODO: fmt.Printf()との違い
 
 	httpInfo := &HTTPInfo{
 		Addr: addr,
